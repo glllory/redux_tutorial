@@ -1,12 +1,43 @@
 # redux_tutorial
 
-Three Principles of Redux:
-- Single source of truth.
->The state of your whole application is stored in an object tree within a single **store**.
-- State is read-only.
->The only way to change the state is to emit an **action**, an object describing what happened.
-- Changes are made with pure functions.
->To specify how the state tree is transformed by actions, you write pure **reducers**.
+- How to create actions and action creators? 
+- How to create a Redux store?
+- How to dispatch my actions against the store?
+- How to design state updates with pure reducers?
+- How to manage complex state with reducer composition and handle asynchronous actions? 
+**EXAMPLE :**
+```js
+const INCREMENT = 'INCREMENT'; // define a constant for increment action types
+const DECREMENT = 'DECREMENT'; // define a constant for decrement action types
+
+const counterReducer = (state = 0, action) => {
+  switch(action.type) {
+    case INCREMENT:
+      return state + 1;
+    case DECREMENT:
+      return state - 1;
+    default:
+      return state;
+  }
+}; // define the counter reducer which will increment or decrement the state based on the action it receives
+
+const incAction = () => {
+  return {type: INCREMENT};
+} // define an action creator for incrementing
+
+const decAction = () => {
+  return {type: DECREMENT};
+}; // define an action creator for decrementing
+
+const store = Redux.createStore(counterReducer); // define the Redux store here, passing in your reducers
+```
+## Three Principles of Redux:
+- Single source of truth:  
+The state of your whole application is stored in an object tree within a single **store**.
+- State is read-only:  
+The only way to change the state is to emit an **action**, an object describing what happened.
+- Changes are made with pure functions:  
+To specify how the state tree is transformed by actions, you write pure **reducers**.
 
 ## How to Combine Multiple Reducers?
 **EXAMPLE :**
