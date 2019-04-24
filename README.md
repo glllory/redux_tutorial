@@ -162,3 +162,7 @@ const store = Redux.createStore(
   Redux.applyMiddleware(ReduxThunk.default)
 );
 ```
+***
+
+# How to use Redux with React!
+Typically, in a React Redux app, you create a single Redux store that manages the state of your entire app. 
