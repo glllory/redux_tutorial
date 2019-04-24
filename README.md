@@ -2,7 +2,7 @@
 
 ## How to Combine Multiple Reducers?
 **EXAMPLE :**
-```
+```js
 const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
 
