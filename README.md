@@ -171,9 +171,26 @@ React Redux provides a small API with two key features: **Provider** and **conne
 The **Provider** is a wrapper component from React Redux that wraps your React app. This wrapper then allows you to access the Redux **store** and **dispatch** functions throughout your component tree. **Provider** takes two props, the Redux store and the child components of your app. 
 **APP component:**
 ```js
-<Provider store={store}>
-  <App/>
-</Provider>
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider, connect } from 'react-redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+
+import rootReducer from './redux/reducers'
+import App from './components/App'
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk)
+);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App/>
+  </Provider>,
+  document.getElementById('root')
+);
 ```
 
 **EXAMPLE code:**
