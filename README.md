@@ -165,4 +165,111 @@ const store = Redux.createStore(
 ***
 
 # How to use Redux with React!
-Typically, in a React Redux app, you create a single Redux store that manages the state of your entire app. 
+Typically, in a React Redux app, you create a single Redux store that manages the state of your entire app.  
+React Redux provides a small API with two key features: **Provider** and **connect**.  
+### Provider:
+The **Provider** is a wrapper component from React Redux that wraps your React app. This wrapper then allows you to access the Redux **store** and **dispatch** functions throughout your component tree. **Provider** takes two props, the Redux store and the child components of your app. 
+**APP component:**
+```js
+<Provider store={store}>
+  <App/>
+</Provider>
+```
+
+**EXAMPLE code:**
+```js
+// Redux:
+const ADD = 'ADD';
+
+const addMessage = (message) => {
+  return {
+    type: ADD,
+    message: message
+  }
+};
+
+const messageReducer = (state = [], action) => {
+  switch (action.type) {
+    case ADD:
+      return [
+        ...state,
+        action.message
+      ];
+    default:
+      return state;
+  }
+};
+
+const store = Redux.createStore(messageReducer);
+
+// React:
+const Provider = ReactRedux.Provider;
+const connect = ReactRedux.connect;
+
+// Change code below this line
+class Presentational extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: '',
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.submitMessage = this.submitMessage.bind(this);
+  }
+  handleChange(event) {
+    this.setState({
+      input: event.target.value
+    });
+  }
+  submitMessage() {
+    this.props.submitNewMessage(this.state.input)
+    this.setState({
+      input: '',
+    });
+  }
+  render() {
+    return (
+      <div>
+        <h2>Type in a new Message:</h2>
+        <input
+          value={this.state.input}
+          onChange={this.handleChange}/><br/>
+        <button onClick={this.submitMessage}>Submit</button>
+        <ul>
+          {this.props.messages.map( (message, idx) => {
+              return (
+                 <li key={idx}>{message}</li>
+              )
+            })
+          }
+        </ul>
+      </div>
+    );
+  }
+};
+// Change code above this line
+
+const mapStateToProps = (state) => {
+  return {messages: state}
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    submitNewMessage: (message) => {
+      dispatch(addMessage(message))
+    }
+  }
+};
+
+const Container = connect(mapStateToProps, mapDispatchToProps)(Presentational);
+
+class AppWrapper extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Container/>
+      </Provider>
+    );
+  }
+};
+```
