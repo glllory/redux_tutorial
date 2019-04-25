@@ -4,7 +4,7 @@
 - How to create a Redux store?
 - How to dispatch my actions against the store?
 - How to design state updates with pure reducers?
-- How to manage complex state with reducer composition and handle asynchronous actions? 
+- How to manage complex state with reducer composition and handle asynchronous actions?  
 **EXAMPLE :**
 ```js
 const INCREMENT = 'INCREMENT'; // define a constant for increment action types
